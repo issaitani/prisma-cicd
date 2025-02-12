@@ -1,0 +1,7 @@
+flask==0.12.2  # Vulnerable to directory traversal (CVE-2018-1000656)
+requests==2.19.1  # Contains vulnerabilities (CVE-2018-18074)
+pyyaml==4.1  # Arbitrary code execution (CVE-2017-18342)
+Django==1.11.29  # End-of-life version with multiple vulnerabilities
+urllib3==1.24.1  # SSL certificate bypass vulnerability (CVE-2019-11324)
+cryptography==2.3  # Memory corruption vulnerability (CVE-2020-25659)
+numpy==1.16.0  # Outdated version with potential vulnerabilities
