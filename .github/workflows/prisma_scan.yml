@@ -1,0 +1,21 @@
+name: Manual Prisma Cloud Scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  security-scan:
+    name: Run Prisma Cloud Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Run Prisma Cloud 
+        id: prisma-cloud
+        uses: bridgecrewio/checkov-action@master
+        env:
+          PRISMA_API_URL: https://api.eu.prismacloud.io
+        with:
+          api-key: ${{ secrets.BC_API_KEY }}
