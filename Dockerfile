@@ -7,7 +7,6 @@ USER root
 RUN apt-get update && \
     apt-get install -y openssl curl wget && \
     apt-get install -y python3 && \
-    apt-get install -y libssl1.0.0 && \
     rm -rf /var/lib/apt/lists/*
 
 # Hardcoded credentials
