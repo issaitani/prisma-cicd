@@ -12,6 +12,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: build the image
+        run: docker build -t testimage/test1 .
+
       - name: Run Prisma Cloud 
         id: prisma-cloud
         uses: bridgecrewio/checkov-action@master
