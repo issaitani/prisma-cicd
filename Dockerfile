@@ -20,7 +20,9 @@ RUN echo 'root:toor' | chpasswd  # Insecure: Hardcoded root password
 
 # Install vulnerable Python packages
 COPY requirements.txt /tmp/requirements.txt
-RUN pipx install -r /tmp/requirements.txt
+RUN pipx install cookiecutter
+RUN pipx runpip cookiecutter install -r /tmp/requirements.txt
+
 
 # Run an insecure web service
 RUN echo "#!/bin/bash\necho 'Insecure Web Server Running'\npython2 -m SimpleHTTPServer 8080" > /start.sh && chmod +x /start.sh
