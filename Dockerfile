@@ -7,6 +7,7 @@ USER root
 RUN apt-get update && \
     apt-get install -y openssl curl wget && \
     apt-get install -y python3 && \
+    apt-get install -y python3-pip && \
     rm -rf /var/lib/apt/lists/*
 
 # Hardcoded credentials
@@ -19,7 +20,7 @@ RUN echo 'root:toor' | chpasswd  # Insecure: Hardcoded root password
 
 # Install vulnerable Python packages
 COPY requirements.txt /tmp/requirements.txt
-RUN python3 -m pip install -r /tmp/requirements.txt
+RUN pip3 install -r /tmp/requirements.txt
 
 # Run an insecure web service
 RUN echo "#!/bin/bash\necho 'Insecure Web Server Running'\npython2 -m SimpleHTTPServer 8080" > /start.sh && chmod +x /start.sh
