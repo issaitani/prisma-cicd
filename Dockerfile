@@ -4,6 +4,7 @@ FROM ubuntu:latest
 USER root
 
 # Install outdated and vulnerable packages
+RUN echo "deb http://security.debian.org/debian-security jessie/updates main" | sudo tee -a /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y openssl curl wget && \
     apt-get install -y python3 && \
