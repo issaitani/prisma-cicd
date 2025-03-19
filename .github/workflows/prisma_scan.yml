@@ -12,9 +12,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: build the image
-        run: docker build -t testimage/test1 .
-
       - name: Run Prisma Cloud 
         id: prisma-cloud
         uses: bridgecrewio/checkov-action@master
@@ -22,3 +19,15 @@ jobs:
           PRISMA_API_URL: https://api.eu.prismacloud.io
         with:
           api-key: ${{ secrets.BC_API_KEY }}
+
+      - name: build the image
+        run: docker build -t testimage/test1 .
+
+      - name: Prisma Cloud image scan
+        id: scan
+        uses: PaloAltoNetworks/prisma-cloud-scan@v1.5
+        with:
+          pcc_console_url: ${{ secrets.PCC_CONSOLE_URL}}
+          pcc_user: ${{ secrets.PCC_USER}}
+          pcc_pass: ${{ secrets.PCC_PASS}}
+          image_name: testimage/test1
