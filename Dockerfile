@@ -1,30 +1,20 @@
-FROM ubuntu:latest
+# Use the official Python image from Docker Hub
+FROM python:3.9-slim
 
-# Insecure: Running as root
-USER root
+# Set the working directory in the container
+WORKDIR /app
 
-# Install outdated and vulnerable packages
-RUN apt-get update && \
-    apt-get install -y openssl curl wget && \
-    apt-get install -y python2 && \
-    apt-get install -y libssl1.0.0 && \
-    rm -rf /var/lib/apt/lists/*
+# Copy the requirements file into the container
+COPY requirements.txt .
 
-# Hardcoded credentials
-ENV USERNAME="admin"
-ENV PASSWORD="SuperSecret123"
+# Install the dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose SSH with default credentials
-RUN apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd
-RUN echo 'root:toor' | chpasswd  # Insecure: Hardcoded root password
+# Copy the rest of the application code into the container
+COPY . .
 
-# Install vulnerable Python packages
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
+# Expose the port the app runs on
+EXPOSE 5000
 
-# Run an insecure web service
-RUN echo "#!/bin/bash\necho 'Insecure Web Server Running'\npython2 -m SimpleHTTPServer 8080" > /start.sh && chmod +x /start.sh
-
-EXPOSE 22 8080
-
-CMD ["/bin/bash", "/start.sh"]
+# Command to run the application
+CMD ["python", "app.py"]
